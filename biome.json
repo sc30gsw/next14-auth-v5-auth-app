@@ -1,10 +1,13 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
-	"files": {
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "files": {
     "ignore": ["public"]
   },
   "organizeImports": {
     "enabled": true
+  },
+  "formatter": {
+    "indentStyle": "space"
   },
   "javascript": {
     "formatter": {
@@ -24,7 +27,8 @@
   "overrides": [
     {
       "include": [
-        "next.config.js",
+        "next.config.mjs",
+        "tailwind.config.ts",
         "layout.tsx",
         "page.tsx",
         "loading.tsx",
