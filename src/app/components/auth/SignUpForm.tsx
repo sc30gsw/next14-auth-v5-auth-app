@@ -54,6 +54,7 @@ export const SignUpForm = () => {
       }
 
       toast.success(result.message)
+      signUpForm.reset()
     })
   }
 
