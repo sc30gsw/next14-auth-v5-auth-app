@@ -34,7 +34,7 @@ export const signUp = async (data: SignUpFormInput): Promise<ActionsResult> => {
       }
     }
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: { name: nickname, email, password: hashedPassword },
     })
 
