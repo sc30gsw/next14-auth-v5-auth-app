@@ -22,10 +22,8 @@ export const signUp = async (data: SignUpFormInput): Promise<ActionsResult> => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 12)
-    console.log('🚀 ~ signUp ~ hashedPassword:', hashedPassword)
 
     const existingUser = await prisma.user.findUnique({ where: { email } })
-    console.log('🚀 ~ signUp ~ existingUser:', existingUser)
 
     if (existingUser) {
       return {
@@ -39,7 +37,6 @@ export const signUp = async (data: SignUpFormInput): Promise<ActionsResult> => {
     const user = await prisma.user.create({
       data: { name: nickname, email, password: hashedPassword },
     })
-    console.log('🚀 ~ signUp ~ user:', user)
 
     return {
       isSuccess: true,
