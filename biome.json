@@ -33,7 +33,8 @@
         "page.tsx",
         "loading.tsx",
         "error.tsx",
-        "not-found.tsx"
+        "not-found.tsx",
+        "middleware.ts"
       ],
       "linter": {
         "rules": {
