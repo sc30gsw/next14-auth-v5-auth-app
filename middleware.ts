@@ -8,16 +8,11 @@ import {
 
 export default auth((req) => {
   const { nextUrl } = req
-  console.log('🚀 ~ auth ~ nextUrl:', nextUrl)
   const isLoggedIn = !!req.auth
-  console.log('🚀 ~ auth ~ isLoggedIn:', isLoggedIn)
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
-  console.log('🚀 ~ auth ~ isApiAuthRoute:', isApiAuthRoute)
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
-  console.log('🚀 ~ auth ~ isPublicRoute:', isPublicRoute)
   const isAuthRoute = authRoutes.includes(nextUrl.pathname)
-  console.log('🚀 ~ auth ~ isAuthRoute:', isAuthRoute)
 
   if (isApiAuthRoute) {
     return null
