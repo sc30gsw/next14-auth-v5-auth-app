@@ -1,5 +1,7 @@
 'use client'
 
+import React, { useState, useTransition } from 'react'
+
 import { signUp } from '@/actions/signUp'
 import { FormError } from '@/app/components/FormError'
 import { Button } from '@/components/ui/button'
@@ -12,23 +14,25 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
+import { signIn } from '@/actions/signIn'
 import { Input } from '@/components/ui/input'
 import { SignUpFormInput, signUpSchema } from '@/types/schemas/signUpSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useState, useTransition } from 'react'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { tv } from 'tailwind-variants'
 
 const signUpFormStyles = tv({
   slots: {
-    form: 'space-y-8 w-[400px]',
+    form: 'space-y-6 w-[400px]',
     buttonWrapper: 'flex justify-end',
+    link: 'flex justify-end mt-4 text-sm text-blue-500 hover:underline',
   },
 })
 
 export const SignUpForm = () => {
-  const { form, buttonWrapper } = signUpFormStyles()
+  const { form, buttonWrapper, link } = signUpFormStyles()
 
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
@@ -49,7 +53,17 @@ export const SignUpForm = () => {
       const result = await signUp(data)
 
       if (!result.isSuccess) {
-        setError(result.error?.message)
+        setError(result.error.message)
+        return
+      }
+
+      const signInResult = await signIn({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (!signInResult.isSuccess) {
+        setError('サインアップに失敗しました')
         return
       }
 
@@ -106,6 +120,9 @@ export const SignUpForm = () => {
             Submit
           </Button>
         </div>
+        <Link href={'/sign-in'} className={link()}>
+          ログインはこちら
+        </Link>
       </form>
     </Form>
   )
