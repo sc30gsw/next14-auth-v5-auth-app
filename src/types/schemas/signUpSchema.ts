@@ -1,7 +1,10 @@
 import z from 'zod'
 
 export const signUpSchema = z.object({
-  email: z.string().email('メールアドレスは必須です。'),
+  email: z
+    .string()
+    .email('メールアドレスは必須です。')
+    .max(128, 'メールアドレスは128文字以下です。'),
   password: z
     .string()
     .min(8, 'パスワードは8文字以上です。')
