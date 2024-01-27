@@ -25,13 +25,14 @@ import { tv } from 'tailwind-variants'
 const signInFormStyles = tv({
   slots: {
     form: 'space-y-6 w-[400px]',
+    forgotPasswordLink: 'px-0 font-normal flex justify-end text-blue-500',
     buttonWrapper: 'flex justify-end',
     link: 'flex justify-end mt-4 text-sm text-blue-500 hover:underline',
   },
 })
 
 export const SignInForm = () => {
-  const { form, buttonWrapper, link } = signInFormStyles()
+  const { form, forgotPasswordLink, buttonWrapper, link } = signInFormStyles()
 
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
@@ -92,6 +93,14 @@ export const SignInForm = () => {
                 <Input type="password" placeholder="password" {...field} />
               </FormControl>
               <FormMessage />
+              <Button
+                size="sm"
+                variant="link"
+                asChild={true}
+                className={forgotPasswordLink()}
+              >
+                <Link href="/reset-password">パスワードをお忘れですか？</Link>
+              </Button>
             </FormItem>
           )}
         />
