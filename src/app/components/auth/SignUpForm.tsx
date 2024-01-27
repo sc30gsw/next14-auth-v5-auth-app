@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import { signIn } from '@/actions/signIn'
 import { Input } from '@/components/ui/input'
 import { SignUpFormInput, signUpSchema } from '@/types/schemas/signUpSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -54,16 +53,6 @@ export const SignUpForm = () => {
 
       if (!result.isSuccess) {
         setError(result.error.message)
-        return
-      }
-
-      const signInResult = await signIn({
-        email: data.email,
-        password: data.password,
-      })
-
-      if (!signInResult.isSuccess) {
-        setError('サインアップに失敗しました')
         return
       }
 
@@ -117,7 +106,7 @@ export const SignUpForm = () => {
         <FormError message={error} />
         <div className={buttonWrapper()}>
           <Button type="submit" disabled={isPending}>
-            Submit
+            アカウントを作成
           </Button>
         </div>
         <Link href={'/sign-in'} className={link()}>
