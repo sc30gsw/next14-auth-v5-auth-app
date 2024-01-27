@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input'
 import { SignInFormInput, signInSchema } from '@/types/schemas/signInSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { tv } from 'tailwind-variants'
@@ -34,6 +35,12 @@ export const SignInForm = () => {
 
   const [error, setError] = useState<string | undefined>('')
   const [isPending, startTransition] = useTransition()
+
+  const searchParams = useSearchParams()
+  const urlError =
+    searchParams.get('error') === 'OAuthAccountNotLinked'
+      ? 'このメールアドレスは既に別のプロバイダーで登録されています。'
+      : ''
 
   const signInForm = useForm<SignInFormInput>({
     resolver: zodResolver(signInSchema),
@@ -88,7 +95,7 @@ export const SignInForm = () => {
             </FormItem>
           )}
         />
-        <FormError message={error} />
+        <FormError message={error || urlError} />
         <div className={buttonWrapper()}>
           <Button type="submit" disabled={isPending}>
             ログイン
