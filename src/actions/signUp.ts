@@ -1,6 +1,8 @@
 'use server'
 
 import { prisma } from '@/lib/db'
+import { sendVerificationEmail } from '@/lib/mail'
+import { generateVerificationToken } from '@/lib/tokens'
 import { handleError } from '@/lib/utils'
 import { ActionsResult } from '@/types/ActionResult'
 import { SignUpFormInput, signUpSchema } from '@/types/schemas/signUpSchema'
@@ -38,9 +40,15 @@ export const signUp = async (data: SignUpFormInput): Promise<ActionsResult> => {
       data: { name: nickname, email, password: hashedPassword },
     })
 
+    const verificationToken = await generateVerificationToken(email)
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+    )
+
     return {
       isSuccess: true,
-      message: 'サインアップに成功しました',
+      message: '確認メールを送信しました',
     }
   } catch (err) {
     handleError(err)
