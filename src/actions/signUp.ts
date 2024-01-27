@@ -4,7 +4,7 @@ import { prisma } from '@/lib/db'
 import { handleError } from '@/lib/utils'
 import { ActionsResult } from '@/types/ActionResult'
 import { SignUpFormInput, signUpSchema } from '@/types/schemas/signUpSchema'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export const signUp = async (data: SignUpFormInput): Promise<ActionsResult> => {
   const result = signUpSchema.safeParse(data)
