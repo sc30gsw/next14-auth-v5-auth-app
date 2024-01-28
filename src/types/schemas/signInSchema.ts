@@ -13,6 +13,7 @@ export const signInSchema = z.object({
       (password: string) => /[A-Za-z]/.test(password) && /[0-9]/.test(password),
       'パスワードは半角英数字の両方を含めてください',
     ),
+  code: z.optional(z.string().max(4, '認証コードは4桁です。')),
 })
 
 export type SignInFormInput = z.infer<typeof signInSchema>

@@ -1,3 +1,4 @@
+import { OTPNotificationEmail } from '@/app/components/auth/email/OTPNotificationEmail'
 import { PasswordResetEmail } from '@/app/components/auth/email/PasswordResetEmail'
 import { VerificationEmail } from '@/app/components/auth/email/VerificationEmail'
 import { ReactElement } from 'react'
@@ -30,5 +31,14 @@ export const sendPasswordRestEmail = async (email: string, token: string) => {
     headers: {
       'X-Entity-Ref-ID': `${new Date().getTime()} `,
     },
+  })
+}
+
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: email,
+    subject: '2段階認証',
+    react: OTPNotificationEmail({ email, otpCode: token }) as ReactElement,
   })
 }
