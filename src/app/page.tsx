@@ -1,18 +1,18 @@
 import React from 'react'
 
+import { EditProfileSheet } from '@/app/components/EditProfileSheet'
 import { Button } from '@/components/ui/button'
+
 import { auth, signOut } from '../../auth'
 
 const Home = async () => {
-  const session = await auth()
-  console.table(session)
+  const user = await auth().then((res) => res?.user)
 
-  if (!session) {
-    return null
-  }
+  console.table(user)
 
   return (
     <div>
+      <EditProfileSheet />
       <form
         action={async () => {
           'use server'
