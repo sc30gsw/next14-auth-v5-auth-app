@@ -55,6 +55,20 @@ export const editProfile = async (
       verificationToken.token,
     )
 
+    const updatedUser = await prisma.user.update({
+      where: { id: dbUser.id },
+      data: { ...data },
+    })
+
+    updateByAuthJs({
+      user: {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isTwoFactorEnabled: updatedUser.isTwoFactorEnabled,
+        role: updatedUser.role,
+      },
+    })
+
     return {
       isSuccess: true,
       message:
